@@ -1,0 +1,288 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#5b1685"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Nega Festas"><link rel="apple-touch-icon" href="logo-nega-festas.png"><link rel="icon" href="logo-nega-festas.png"><link rel="manifest" href="manifest.json">
+<title>Nega Festas • Gestão</title><style>
+:root{--p:#5b1685;--l:#f3e9f9;--g:#178657;--r:#cf4660;--gold:#aa7815;--line:#eadfed;--ink:#2e2433}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#fbf9fc;color:var(--ink)}header{position:sticky;top:0;background:#fff;z-index:5;border-bottom:1px solid var(--line);padding:14px 16px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:20px;font-weight:800;color:var(--p)}.brand small{display:block;font-size:11px;font-weight:500;color:#807584}.gear{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px}
+main{padding:14px 14px 85px;max-width:1100px;margin:auto}.hero{background:linear-gradient(135deg,var(--p),#8e45b4);color:#fff;border-radius:22px;padding:20px;margin-bottom:14px}.hero h1{margin:0 0 6px;font-size:24px}.hero p{margin:0;opacity:.9}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}.metric,.panel,.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px}.metric small{color:#7e7382;display:block}.metric b{font-size:19px;display:block;margin-top:5px}.red{color:var(--r)}.green{color:var(--g)}.purple{color:var(--p)}.gold{color:var(--gold)}
+.panel{margin:12px 0}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.head h2,.head h3{margin:0;color:var(--p)}button,select,input{font:inherit}.btn{border:0;border-radius:11px;padding:9px 12px;background:var(--p);color:#fff;font-weight:700}.ghost{background:var(--l);color:var(--p)}.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:5px}.tabs button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#6e6075;padding:8px 10px;border-radius:99px}.tabs button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.section{display:none}.section.on{display:block}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.card h3{margin:0 0 4px}.meta{font-size:12px;color:#7d7381}.money{font-size:18px;font-weight:800;color:var(--p)}.badge{font-size:11px;padding:4px 7px;border-radius:99px;background:var(--l);color:var(--p);font-weight:700}.table{overflow:auto;border:1px solid var(--line);border-radius:13px}table{width:100%;border-collapse:collapse;min-width:680px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{background:#faf5fd;color:var(--p)}tr:last-child td{border-bottom:0}.rowbtn{border:0;border-radius:8px;padding:5px 7px}.ok{background:#e6f7ee;color:var(--g)}.edit{background:var(--l);color:var(--p)}.del{background:#fff0f2;color:var(--r)}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center}.nav{max-width:650px;width:100%;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{border:0;background:#fff;padding:9px 3px;color:#7b707f;font-size:11px}.nav button b{display:block;font-size:19px}.nav button.on{color:var(--p)}
+.modal{position:fixed;inset:0;background:#2d1b3788;z-index:10;display:none;place-items:center;padding:14px}.modal.on{display:grid}.dialog{width:min(600px,100%);background:#fff;border-radius:20px;padding:16px;max-height:88vh;overflow:auto}.form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.form label{font-size:11px;color:#7d7381}.form input,.form select{width:100%;padding:9px;border:1px solid var(--line);border-radius:10px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+@media(max-width:720px){.metrics{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.form{grid-template-columns:1fr}.hero h1{font-size:21px}}
+
+.chatfab{position:fixed;right:16px;bottom:78px;width:56px;height:56px;border:0;border-radius:50%;background:#5b1685;color:#fff;font-size:24px;box-shadow:0 10px 24px #5b168544;z-index:20}
+.chatbox{position:fixed;right:14px;bottom:145px;width:min(390px,calc(100vw - 28px));height:min(560px,70vh);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 50px #29143b44;z-index:25;display:none;overflow:hidden}
+.chatbox.on{display:flex;flex-direction:column}
+.chathead{background:linear-gradient(135deg,var(--p),#8e45b4);color:#fff;padding:13px 14px;display:flex;justify-content:space-between;align-items:center}
+.chathead b{font-size:16px}.chathead button{border:0;background:#ffffff22;color:#fff;border-radius:9px;padding:5px 8px}
+.chatmsgs{flex:1;overflow:auto;padding:12px;background:#faf7fc}
+.msg{max-width:88%;padding:9px 11px;border-radius:13px;margin:7px 0;font-size:13px;line-height:1.35}
+.msg.bot{background:#fff;border:1px solid var(--line)}
+.msg.user{background:var(--p);color:#fff;margin-left:auto}
+.chatinput{display:flex;gap:7px;padding:10px;border-top:1px solid var(--line);background:#fff}
+.chatinput input{flex:1;border:1px solid var(--line);border-radius:11px;padding:10px}
+.chatinput button{border:0;background:var(--p);color:#fff;border-radius:11px;padding:0 14px;font-weight:700}
+.chathint{font-size:11px;color:#807584;padding:0 10px 9px;background:#fff}
+
+/* Nega Festas 2.0 */
+:root{--p:#5c1685;--p2:#8f43b5;--pink:#d06da8;--cream:#fff9fd;--l:#f6eafd;--line:#eadcf0;--shadow:0 12px 34px rgba(77,25,104,.10)}
+body{background:linear-gradient(180deg,#fff 0,#fbf7fd 38%,#f9f5fb 100%);padding-bottom:env(safe-area-inset-bottom)}
+header{background:rgba(255,255,255,.94);backdrop-filter:blur(18px);padding:12px 16px;box-shadow:0 4px 24px #5b16850b}
+.header-left{display:flex;align-items:center;gap:10px}.profile-logo{width:46px;height:46px;border-radius:14px;object-fit:cover;border:2px solid #f0d9fb;box-shadow:0 6px 14px #5b168522}
+.brand{font-size:22px;letter-spacing:-.5px}.brand small{margin-top:2px}
+.header-actions{display:flex;gap:8px}.gear{width:42px;height:42px;font-size:18px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#4f0f77 0%,#7c2aa6 55%,#b05bc5 100%);padding:24px;border-radius:28px;box-shadow:0 16px 34px #5b16852c}
+.hero:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;right:-55px;top:-80px;background:#ffffff18}
+.hero .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:1.3px;font-weight:800;opacity:.82}.hero h1{font-size:28px;letter-spacing:-.8px}.hero p{max-width:580px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.quick{border:1px solid var(--line);background:#fff;border-radius:20px;padding:14px;text-align:left;box-shadow:var(--shadow);color:var(--ink)}.quick b{display:block;font-size:24px;margin-bottom:8px}.quick span{font-weight:800;color:var(--p);display:block}.quick small{color:#807584}
+.metric,.panel,.card{box-shadow:var(--shadow);border-color:#efe4f3}.metric{border-radius:20px}.panel,.card{border-radius:22px}.card{transition:.15s transform}.card:active{transform:scale(.985)}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#26a269;margin-right:5px}
+.login-screen{position:fixed;inset:0;z-index:999;background:radial-gradient(circle at 80% 10%,#a44cc755,transparent 28%),linear-gradient(155deg,#3e075f,#6d198f 55%,#a149b1);display:flex;align-items:center;justify-content:center;padding:22px}
+.login-screen.hidden{display:none}.login-card{width:min(410px,100%);background:#fffffffa;border-radius:30px;padding:24px;box-shadow:0 28px 80px #25003566;text-align:center}
+.login-logo{width:108px;height:108px;border-radius:28px;object-fit:cover;box-shadow:0 12px 30px #5b168533;border:3px solid #f1dcfb}.login-card h1{margin:15px 0 4px;color:var(--p);font-size:30px}.login-card .sub{color:#806e87;margin-bottom:20px}.login-form{text-align:left}.login-form label{font-size:12px;font-weight:700;color:#6f6074}.login-form input{width:100%;padding:13px;border-radius:14px;border:1px solid var(--line);margin:6px 0 12px;background:#fff}.login-btn{width:100%;padding:13px;border:0;border-radius:15px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-weight:800;font-size:16px}.login-error{color:var(--r);font-size:12px;min-height:18px;margin-top:8px}.login-note{font-size:11px;color:#94879a;margin-top:14px}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px}.section-title h2{margin:0;color:var(--p)}
+.agenda-card{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center}.datebox{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border-radius:16px;padding:10px;text-align:center}.datebox b{font-size:22px;display:block}.datebox small{text-transform:uppercase}.agenda-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.money-positive{color:var(--g)}.money-negative{color:var(--r)}
+.cash-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.more-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.more-grid button{min-height:92px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow);font-weight:800;color:var(--p);font-size:15px}.more-grid button b{display:block;font-size:25px;margin-bottom:6px}
+.bottom{padding-bottom:env(safe-area-inset-bottom);z-index:30}.nav{grid-template-columns:repeat(5,1fr)}.nav button{padding:8px 2px 7px}.nav button b{font-size:20px}
+.chatfab{bottom:calc(76px + env(safe-area-inset-bottom))}
+@media(max-width:720px){.quick-grid{grid-template-columns:1fr 1fr}.cash-summary{grid-template-columns:1fr}.agenda-card{grid-template-columns:60px 1fr}.agenda-card>.agenda-right{grid-column:2}.hero h1{font-size:25px}}
+
+</style></head><body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <img src="logo-nega-festas.png" class="login-logo" alt="Logo Nega Festas">
+    <h1>Nega Festas</h1>
+    <div class="sub">Gestão financeira e agenda de eventos</div>
+    <div class="login-form">
+      <label>Usuário</label><input id="loginUser" autocomplete="username" placeholder="Seu usuário">
+      <label>Senha</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Sua senha" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="login-btn" onclick="doLogin()">Entrar</button>
+      <div id="loginError" class="login-error"></div>
+    </div>
+    <div class="login-note">Acesso inicial: negafestas • senha 1234</div>
+  </div>
+</div>
+<header>
+<div class="header-left"><img src="logo-nega-festas.png" class="profile-logo" alt="Nega Festas"><div class="brand">Nega Festas<small>Financeiro • Agenda • Eventos</small></div></div>
+<div class="header-actions"><button class="gear" title="Backup" onclick="backup()">💾</button><button class="gear" title="Sair" onclick="logout()">↪</button></div>
+</header>
+<main>
+<section id="inicio" class="section on"><div class="hero"><div class="eyebrow">Painel da Nega Festas</div><h1>Seu negócio, organizado em um só lugar ✨</h1><p>Controle financeiro, dinheiro em espécie, despesas mensais e todos os agendamentos da Nega Festas.</p></div>
+<div class="quick-grid">
+<button class="quick" onclick="goTo('agenda')"><b>📅</b><span>Agenda</span><small>Eventos e clientes</small></button>
+<button class="quick" onclick="goTo('caixa')"><b>💵</b><span>Espécie</span><small>Entradas e saídas</small></button>
+<button class="quick" onclick="goTo('mensais')"><b>🧾</b><span>Mensais</span><small>Contas recorrentes</small></button>
+<button class="quick" onclick="goTo('festas')"><b>🎉</b><span>Festas</span><small>Valores a receber</small></button>
+</div>
+<div class="metrics"><div class="metric"><small>Edna pendente</small><b class="red" id="hEdna"></b></div><div class="metric"><small>Faturas Ewelin</small><b class="red" id="hFat"></b></div><div class="metric"><small>Limite disponível</small><b class="green" id="hLim"></b></div><div class="metric"><small>Festas a receber</small><b class="gold" id="hFest"></b></div></div>
+<div class="panel"><div class="head"><h2>Próximos eventos</h2><button class="btn ghost" onclick="goTo('agenda')">Ver agenda</button></div><div id="homeAgenda" class="grid"></div></div>
+<div class="panel"><div class="head"><h2>Resumo financeiro</h2></div><div id="summaryCards" class="grid"></div></div></section>
+
+<section id="edna" class="section"><div class="panel"><div class="head"><h2>Gastos Edna</h2><button class="btn" onclick="openAdd('edna')">＋ Adicionar</button></div><select id="edMonth" onchange="renderEdna()"></select></div>
+<div class="metrics"><div class="metric"><small>Total do mês</small><b id="edTotal"></b></div><div class="metric"><small>Pendente</small><b class="red" id="edPend"></b></div><div class="metric"><small>Pago</small><b class="green" id="edPaid"></b></div><div class="metric"><small>Itens</small><b id="edCount"></b></div></div>
+<div class="panel"><div class="table"><table><thead><tr><th>Gasto</th><th>Mês</th><th>Valor</th><th>Parcela</th><th>Status</th><th></th></tr></thead><tbody id="edRows"></tbody></table></div></div></section>
+
+<section id="ewelin" class="section"><div class="panel"><div class="head"><h2>Gastos Ewelin</h2></div><div class="tabs" id="ewTabs"></div></div>
+<div id="ewContent"></div></section>
+
+<section id="festas" class="section"><div class="panel"><div class="head"><h2>Nega Festas</h2><button class="btn" onclick="openAdd('event')">＋ Evento</button></div></div>
+<div class="metrics"><div class="metric"><small>Contratado</small><b id="fTotal"></b></div><div class="metric"><small>Recebido</small><b class="green" id="fPaid"></b></div><div class="metric"><small>Falta receber</small><b class="red" id="fDue"></b></div><div class="metric"><small>Lucro previsto</small><b class="gold" id="fProfit"></b></div></div><div class="grid" id="eventGrid"></div></section>
+
+
+<section id="agenda" class="section">
+  <div class="panel"><div class="section-title"><h2>📅 Agendamentos</h2><button class="btn" onclick="openAdd('agenda')">＋ Agendar</button></div>
+  <p class="meta">Agenda completa da Nega Festas. Cadastre cliente, tema, local, serviço, horários e valores.</p></div>
+  <div class="metrics"><div class="metric"><small>Próximos</small><b id="agCount"></b></div><div class="metric"><small>Contratado</small><b id="agTotal"></b></div><div class="metric"><small>Recebido</small><b class="green" id="agPaid"></b></div><div class="metric"><small>A receber</small><b class="gold" id="agDue"></b></div></div>
+  <div id="agendaList" class="grid"></div>
+</section>
+
+<section id="caixa" class="section">
+  <div class="panel"><div class="section-title"><h2>💵 Dinheiro em espécie</h2><button class="btn" onclick="openAdd('cash')">＋ Movimento</button></div><p class="meta">Registre todo dinheiro físico que entra ou sai do caixa.</p></div>
+  <div class="cash-summary"><div class="metric"><small>Saldo em espécie</small><b class="green" id="cashBalance"></b></div><div class="metric"><small>Entradas</small><b class="green" id="cashIn"></b></div><div class="metric"><small>Saídas</small><b class="red" id="cashOut"></b></div></div>
+  <div class="panel"><div class="table"><table><thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Valor</th><th></th></tr></thead><tbody id="cashRows"></tbody></table></div></div>
+</section>
+
+<section id="mensais" class="section">
+  <div class="panel"><div class="section-title"><h2>🧾 Despesas mensais</h2><button class="btn" onclick="openAdd('monthly')">＋ Despesa</button></div><p class="meta">Água, energia, telefone, internet, colégio, plano de saúde, condomínio e outras contas recorrentes.</p></div>
+  <div class="metrics"><div class="metric"><small>Total cadastrado</small><b id="monTotal"></b></div><div class="metric"><small>Pago</small><b class="green" id="monPaid"></b></div><div class="metric"><small>A pagar</small><b class="red" id="monDue"></b></div><div class="metric"><small>Contas</small><b id="monCount"></b></div></div>
+  <div id="monthlyGrid" class="grid"></div>
+</section>
+
+<section id="mais" class="section">
+  <div class="panel"><h2 style="margin-top:0;color:var(--p)">Mais áreas</h2><div class="more-grid">
+    <button onclick="goTo('edna')"><b>👛</b>Gastos Edna</button>
+    <button onclick="goTo('ewelin')"><b>💳</b>Financeiro Ewelin</button>
+    <button onclick="goTo('festas')"><b>🎉</b>Financeiro Festas</button>
+    <button onclick="goTo('mensais')"><b>🧾</b>Despesas mensais</button>
+    <button onclick="goTo('proj')"><b>📊</b>Projeções</button>
+    <button onclick="backup()"><b>💾</b>Fazer backup</button>
+  </div></div>
+</section>
+
+<section id="proj" class="section"><div class="panel"><div class="head"><h2>Projeções</h2></div><div class="table"><table><thead><tr><th>Mês</th><th>Parcelas cartões</th><th>Renegociações</th><th>Despesas mensais</th><th>Total comprometido</th></tr></thead><tbody id="projRows"></tbody></table></div></div></section>
+</main>
+<nav class="bottom"><div class="nav"><button class="on" data-id="inicio" onclick="go('inicio',this)"><b>⌂</b>Início</button><button data-id="ewelin" onclick="go('ewelin',this)"><b>💳</b>Financeiro</button><button data-id="agenda" onclick="go('agenda',this)"><b>📅</b>Agenda</button><button data-id="caixa" onclick="go('caixa',this)"><b>💵</b>Espécie</button><button data-id="mais" onclick="go('mais',this)"><b>☰</b>Mais</button></div></nav>
+
+<button class="chatfab" onclick="toggleChat()">💬</button>
+<div class="chatbox" id="chatbox">
+  <div class="chathead"><div><b>Júlia • Assistente Nega Festas</b><div style="font-size:11px;opacity:.85">Ajuda a organizar seus dados</div></div><button onclick="toggleChat()">✕</button></div>
+  <div class="chatmsgs" id="chatmsgs">
+    <div class="msg bot">Pode me dar comandos como:<br>• “Adicionar gasto Edna setembro gás 230”<br>• “Marcar Plano de saúde como pago”<br>• “Adicionar evento Maria 20/09/2026 tema Minnie valor 300 pago 75”<br>• “Registrar gasto da festa Thayy 60”</div>
+  </div>
+  <div class="chatinput"><input id="chatcmd" placeholder="Digite um comando..." onkeydown="if(event.key==='Enter')runChat()"><button onclick="runChat()">Enviar</button></div>
+  <div class="chathint">Os comandos alteram os dados salvos neste aparelho.</div>
+</div>
+<div class="modal" id="modal"><div class="dialog" id="dialog"></div></div>
+<script>
+const SEED={"edna": [{"month": "Agosto 2026", "description": "Carro", "amount": 260.0, "installment": "1/6", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Mercado", "amount": 185.0, "installment": "1/3", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Empréstimo antecipado", "amount": 479.0, "installment": "Até agosto", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Não informado", "amount": 127.5, "installment": "1/2", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Cílios", "amount": 120.0, "installment": "", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Pai e Filho", "amount": 94.0, "installment": "1/3", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Galinha", "amount": 140.0, "installment": "", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Mercado", "amount": 100.0, "installment": "1/3", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Dentista", "amount": 214.0, "installment": "1/2", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Energia", "amount": 58.91, "installment": "", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Água", "amount": 233.67, "installment": "", "status": "A pagar"}, {"month": "Agosto 2026", "description": "Internet", "amount": 57.0, "installment": "", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Carro", "amount": 260.0, "installment": "2/6", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Mercado", "amount": 185.0, "installment": "2/3", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Não informado", "amount": 127.5, "installment": "2/2", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Pai e Filho", "amount": 94.0, "installment": "2/3", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Mercado", "amount": 100.0, "installment": "2/3", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Dentista", "amount": 214.0, "installment": "Última parcela", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Empréstimo", "amount": 476.0, "installment": "", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Eushadai", "amount": 88.94, "installment": "1x", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Não informado", "amount": 110.0, "installment": "1x", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Gás Carlos", "amount": 230.0, "installment": "1/2", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Detran carro Edna", "amount": 198.0, "installment": "1/6", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Envio para tia Zezé", "amount": 100.0, "installment": "1x", "status": "A pagar"}, {"month": "Setembro 2026", "description": "Saldo em aberto de agosto", "amount": 419.08, "installment": "1x", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Carro", "amount": 260.0, "installment": "3/6", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Mercado", "amount": 185.0, "installment": "3/3", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Empréstimo", "amount": 476.0, "installment": "", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Pai e Filho", "amount": 94.0, "installment": "Última parcela", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Mercado", "amount": 100.0, "installment": "Última parcela", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Não informado", "amount": 110.0, "installment": "1x", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Gás Carlos", "amount": 230.0, "installment": "2/2", "status": "A pagar"}, {"month": "Outubro 2026", "description": "Detran carro Edna", "amount": 198.0, "installment": "2/6", "status": "A pagar"}, {"month": "Novembro 2026", "description": "Carro", "amount": 260.0, "installment": "4/6", "status": "A pagar"}, {"month": "Novembro 2026", "description": "Empréstimo", "amount": 476.0, "installment": "", "status": "A pagar"}, {"month": "Novembro 2026", "description": "Detran carro Edna", "amount": 198.0, "installment": "3/6", "status": "A pagar"}, {"month": "Dezembro 2026", "description": "Carro", "amount": 260.0, "installment": "5/6", "status": "A pagar"}, {"month": "Dezembro 2026", "description": "Empréstimo", "amount": 476.0, "installment": "", "status": "A pagar"}, {"month": "Dezembro 2026", "description": "Detran carro Edna", "amount": 198.0, "installment": "4/6", "status": "A pagar"}, {"month": "Janeiro 2027", "description": "Carro", "amount": 260.0, "installment": "6/6", "status": "A pagar"}, {"month": "Janeiro 2027", "description": "Empréstimo", "amount": 476.0, "installment": "10/10", "status": "A pagar"}, {"month": "Janeiro 2027", "description": "Detran carro Edna", "amount": 198.0, "installment": "5/6", "status": "A pagar"}, {"month": "Fevereiro 2027", "description": "Detran carro Edna", "amount": 198.0, "installment": "6/6", "status": "A pagar"}], "cards": [{"name": "Neon", "final": "—", "limit": 1550, "used": 647.42, "available": 902.58, "invoice": 113.94, "due": "25/09/2026", "best": "19/09/2026", "status": "Ativo"}, {"name": "Bradesco Elo", "final": "8777", "limit": 4750, "used": 2580, "available": 2170, "invoice": 234.69, "due": "25/09/2026", "best": "16/09/2026", "status": "Ativo"}, {"name": "Afinz Visa", "final": "7298", "limit": 2970, "used": 1905.04, "available": 1064.96, "invoice": 196.06, "due": "05/09/2026", "best": "28/08/2026", "status": "Ativo"}, {"name": "Santander Elite Visa", "final": "6195", "limit": 6370, "used": 4622.88, "available": 1747.12, "invoice": 1411.49, "due": "07/09/2026", "best": "01/09/2026", "status": "Ativo"}, {"name": "Hipercard Internacional Zero", "final": "4403", "limit": 962, "used": 133.29, "available": 828.71, "invoice": 0, "due": "—", "best": "02/09/2026", "status": "Ativo"}, {"name": "Itaú Uniclass Signature", "final": "3459", "limit": 500, "used": 220.89, "available": 279.11, "invoice": 124.11, "due": "15/09/2026", "best": "08/09/2026", "status": "Ativo"}, {"name": "Itaú Uniclass Signature", "final": "7945", "limit": 2406, "used": 450, "available": 1956, "invoice": 50, "due": "08/09/2026", "best": "29/08/2026", "status": "Ativo"}, {"name": "Mercado Pago Visa", "final": "0424", "limit": 1800, "used": 264, "available": 1536, "invoice": 0, "due": "08/09/2026", "best": "02/09/2026", "status": "Ativo"}], "installments": [["Neon", "Supermercado Pai", 96.07, "3/3", "Set/2026"], ["Neon", "Rede Elshaddai", 113.94, "2/2", "Set/2026"], ["Bradesco Elo", "Shopee AzzurraStore", 64.59, "2/5", "Set/2026"], ["Bradesco Elo", "Jim com Maria de Fátima", 55, "2/4", "Set/2026"], ["Bradesco Elo", "MP PontoGelado", 218.5, "2/6", "Set/2026"], ["Bradesco Elo", "Supermercado Pai e FI", 158.37, "1/3", "Set/2026"], ["Bradesco Elo", "Shopee Royalhair", 159.6, "1/5", "Set/2026"], ["Afinz Visa", "Filial João Pessoa", 161.7, "7/10", "Set/2026"], ["Santander Elite Visa", "Mercado Bem Feliz 02", 78.09, "1/3", "Set/2026"], ["Santander Elite Visa", "Temu Colec", 21.55, "1/3", "Set/2026"], ["Santander Elite Visa", "Temu", 32.03, "1/6", "Set/2026"], ["Santander Elite Visa", "Jim.com João Batista", 348.9, "1/4", "Set/2026"], ["Santander Elite Visa", "BarbaraKelry", 214, "1/2", "Set/2026"], ["Hipercard Internacional Zero", "MP *Igmecânica", 133.39, "6/6", "Out/2026"], ["Itaú 3459", "Bem Mais Supermercados", 40.12, "1/2", "Set/2026"], ["Itaú 3459", "Jucicleia", 56.66, "2/3", "Set/2026"], ["Itaú 7945", "Sandro Assistência", 200, "2/4", "Set/2026"], ["Mercado Pago Visa", "Ponto Gelado", 132, "3/5", "Set/2026"]], "reneg": [{"name": "Renegociação Itaú 1", "amount": 871.36, "installment": "3/15", "due": "06/09/2026", "status": "Em dia", "balance": 11327.68}, {"name": "Renegociação Itaú 2", "amount": 2127.98, "installment": "5/15", "due": "29/08/2026", "status": "Em dia", "balance": 23407.78}], "monthly": [{"name": "Água", "amount": 0, "status": "", "note": ""}, {"name": "Luz", "amount": 0, "status": "", "note": ""}, {"name": "Telefone", "amount": 0, "status": "", "note": ""}, {"name": "Internet", "amount": 0, "status": "", "note": ""}, {"name": "Colégio", "amount": 0, "status": "", "note": ""}, {"name": "GAV", "amount": 0, "status": "", "note": ""}, {"name": "Condomínio GAV", "amount": 0, "status": "", "note": ""}, {"name": "Passagem colégio", "amount": 0, "status": "", "note": ""}, {"name": "Plano de saúde", "amount": 378.03, "status": "Pago", "note": "Pago via Pix em 10/08/2026"}, {"name": "Consignado INSS", "amount": 0, "status": "", "note": "A partir de Set/2026"}, {"name": "Mercado", "amount": 0, "status": "", "note": ""}, {"name": "Transporte", "amount": 0, "status": "", "note": ""}, {"name": "Streaming", "amount": 0, "status": "", "note": ""}, {"name": "Seguro", "amount": 0, "status": "", "note": ""}, {"name": "Outros", "amount": 0, "status": "", "note": ""}], "mortgage": {"institution": "Banco do Brasil", "product": "BB Crédito Imobiliário Aquisição FGTS PF", "contract": 90400, "proposal": "11/03/2016", "status": "Ativo", "note": "Parcela mensal, saldo devedor e prazo restante ainda não informados."}, "payments": [{"date": "10/08/2026 15:34", "account": "Neon", "type": "Pagamento de fatura", "amount": 437.41, "status": "Pago", "note": "Baixa informada por comprovante."}], "summary": [{"month": "Set/2026", "cards": 4092.23, "reneg": 2999.34, "monthly": 0, "total": 7091.57}, {"month": "Out/2026", "cards": 4149, "reneg": 2999.34, "monthly": 0, "total": 7148.34}, {"month": "Nov/2026", "cards": 3260.66, "reneg": 2999.34, "monthly": 0, "total": 6260}, {"month": "Dez/2026", "cards": 1970.64, "reneg": 2999.34, "monthly": 0, "total": 4969.98}, {"month": "Jan/2027", "cards": 820.26, "reneg": 2999.34, "monthly": 0, "total": 3819.6}, {"month": "Fev/2027", "cards": 64.06, "reneg": 2999.34, "monthly": 0, "total": 3063.4}], "events": [{"date": "2026-08-15", "client": "Gisele", "theme": "Borboletas rosa", "service": "Pegue e monte", "total": 165, "paid": 165, "expenses": 0, "status": "Pago"}, {"date": "2026-08-22", "client": "Thayy", "theme": "Minnei Rosa", "service": "Decoração", "total": 265, "paid": 0, "expenses": 0, "status": "Pendente"}, {"date": "2026-09-20", "client": "Juracy", "theme": "Adulto", "service": "A confirmar", "total": 0, "paid": 0, "expenses": 0, "status": "A confirmar"}, {"date": "2026-12-26", "client": "Sibele dos Santos Silva Salvino", "theme": "Flamengo", "service": "Pegue e monte", "total": 260, "paid": 0, "expenses": 0, "status": "Confirmado"}]};
+const KEY='organizaEwelinV2';let d=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(SEED));let ewTab='Cartões';
+
+const LOGIN_KEY='negaFestasLoginV1';
+if(!Array.isArray(d.cash)) d.cash=[];
+if(!Array.isArray(d.agenda)) d.agenda=d.events.map((x,i)=>({...x,id:'ev'+i,local:'',start:'',end:'',notes:''}));
+if(!Array.isArray(d.monthly2)) d.monthly2=(d.monthly||[]).map((x,i)=>({id:'m'+i,name:x.name,amount:Number(x.amount||0),status:x.status||'A pagar',due:'',note:x.note||''}));
+const defaultMonthly=['Água','Energia','Telefone','Internet','Colégio','Condomínio GAV','Passagem colégio','Plano de saúde','Consignado INSS'];
+defaultMonthly.forEach((name,i)=>{if(!d.monthly2.some(x=>norm(x.name)===norm(name)))d.monthly2.push({id:'dm'+i,name,amount:0,status:'A pagar',due:'',note:''})});
+
+function doLogin(){
+ const u=(loginUser.value||'').trim().toLowerCase(),p=loginPass.value||'';
+ if(u==='negafestas'&&p==='1234'){sessionStorage.setItem(LOGIN_KEY,'1');loginScreen.classList.add('hidden');loginError.textContent='';}
+ else loginError.textContent='Usuário ou senha incorretos.';
+}
+function logout(){sessionStorage.removeItem(LOGIN_KEY);loginPass.value='';loginScreen.classList.remove('hidden')}
+if(sessionStorage.getItem(LOGIN_KEY)==='1') loginScreen.classList.add('hidden');
+
+function goTo(id){
+ document.querySelectorAll('.section').forEach(x=>x.classList.toggle('on',x.id===id));
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.id===id));
+ window.scrollTo({top:0,behavior:'smooth'}); render();
+}
+function dateParts(iso){if(!iso)return {day:'--',mon:'---',full:'Sem data'};const dt=new Date(iso+'T12:00:00');return {day:String(dt.getDate()).padStart(2,'0'),mon:dt.toLocaleDateString('pt-BR',{month:'short'}).replace('.',''),full:dt.toLocaleDateString('pt-BR')}}
+function renderAgenda(){
+ const arr=[...d.agenda].sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ const total=arr.reduce((a,x)=>a+Number(x.total||0),0),paid=arr.reduce((a,x)=>a+Number(x.paid||0),0);
+ agCount.textContent=arr.length;agTotal.textContent=M(total);agPaid.textContent=M(paid);agDue.textContent=M(Math.max(0,total-paid));
+ agendaList.innerHTML=arr.map((x,i)=>{const dp=dateParts(x.date),due=Math.max(0,Number(x.total||0)-Number(x.paid||0));return `<div class="card agenda-card"><div class="datebox"><b>${dp.day}</b><small>${dp.mon}</small></div><div><h3>${x.client||'Cliente'}</h3><div class="meta">${x.theme||'Tema a definir'} • ${x.service||'Serviço'}</div><div class="meta">${x.local?('📍 '+x.local+' • '):''}${x.start?('🕒 '+x.start):''}</div><div class="agenda-actions"><span class="badge">${x.status||'Confirmado'}</span><span class="badge">Total ${M(x.total)}</span><span class="badge">Falta ${M(due)}</span></div></div><div class="agenda-right"><button class="rowbtn edit" onclick="editAgenda(${i})">✎</button> <button class="rowbtn del" onclick="delAgenda(${i})">×</button></div></div>`}).join('');
+ homeAgenda.innerHTML=arr.slice(0,3).map(x=>{const dp=dateParts(x.date);return `<div class="card"><h3>${dp.full} • ${x.client}</h3><div class="meta">${x.theme||'Tema a definir'} • ${x.service||''}</div><div class="money">${M(x.total)}</div></div>`}).join('')||'<div class="card"><h3>Nenhum agendamento</h3><div class="meta">Toque em Agenda para cadastrar.</div></div>';
+}
+function renderCash(){
+ const ins=d.cash.filter(x=>x.type==='Entrada').reduce((a,x)=>a+Number(x.amount||0),0),outs=d.cash.filter(x=>x.type==='Saída').reduce((a,x)=>a+Number(x.amount||0),0);
+ cashIn.textContent=M(ins);cashOut.textContent=M(outs);cashBalance.textContent=M(ins-outs);
+ cashRows.innerHTML=[...d.cash].reverse().map((x,ri)=>{const i=d.cash.length-1-ri;return `<tr><td>${dateParts(x.date).full}</td><td><b>${x.description}</b></td><td>${x.type}</td><td class="${x.type==='Entrada'?'money-positive':'money-negative'}">${x.type==='Entrada'?'+ ':'- '}${M(x.amount)}</td><td><button class="rowbtn del" onclick="delCash(${i})">×</button></td></tr>`}).join('');
+}
+function renderMonthly2(){
+ const total=d.monthly2.reduce((a,x)=>a+Number(x.amount||0),0),paid=d.monthly2.filter(x=>x.status==='Pago').reduce((a,x)=>a+Number(x.amount||0),0);
+ monTotal.textContent=M(total);monPaid.textContent=M(paid);monDue.textContent=M(total-paid);monCount.textContent=d.monthly2.length;
+ monthlyGrid.innerHTML=d.monthly2.map((x,i)=>`<div class="card"><div class="head"><h3>${x.name}</h3><span class="badge">${x.status||'A pagar'}</span></div><div class="money">${x.amount?M(x.amount):'Valor a informar'}</div><div class="meta">${x.due?'Vencimento '+x.due:'Sem vencimento'}${x.note?' • '+x.note:''}</div><div class="agenda-actions"><button class="rowbtn ok" onclick="toggleMonthly(${i})">${x.status==='Pago'?'↩ A pagar':'✓ Pagar'}</button><button class="rowbtn edit" onclick="editMonthly(${i})">✎</button><button class="rowbtn del" onclick="delMonthly(${i})">×</button></div></div>`).join('');
+}
+function delCash(i){if(confirm('Excluir este movimento?')){d.cash.splice(i,1);save()}}
+function toggleMonthly(i){d.monthly2[i].status=d.monthly2[i].status==='Pago'?'A pagar':'Pago';save()}
+function delMonthly(i){if(confirm('Excluir esta despesa?')){d.monthly2.splice(i,1);save()}}
+function delAgenda(i){if(confirm('Excluir este agendamento?')){d.agenda.splice(i,1);save()}}
+function editMonthly(i){const x=d.monthly2[i];dialog.innerHTML=`<h2>Editar despesa</h2><div class="form"><div><label>Nome</label><input id="a1" value="${x.name||''}"></div><div><label>Valor</label><input id="a2" type="number" step=".01" value="${x.amount||0}"></div><div><label>Vencimento</label><input id="a3" value="${x.due||''}"></div><div><label>Observação</label><input id="a4" value="${x.note||''}"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="saveMonthlyEdit(${i})">Salvar</button></div>`;modal.classList.add('on')}
+function saveMonthlyEdit(i){Object.assign(d.monthly2[i],{name:a1.value,amount:+a2.value||0,due:a3.value,note:a4.value});closeM();save()}
+function editAgenda(i){const x=d.agenda[i];dialog.innerHTML=`<h2>Editar agendamento</h2><div class="form"><div><label>Data</label><input id="a1" type="date" value="${x.date||''}"></div><div><label>Cliente</label><input id="a2" value="${x.client||''}"></div><div><label>Tema</label><input id="a3" value="${x.theme||''}"></div><div><label>Serviço</label><input id="a4" value="${x.service||''}"></div><div><label>Local</label><input id="a5" value="${x.local||''}"></div><div><label>Horário</label><input id="a6" type="time" value="${x.start||''}"></div><div><label>Valor total</label><input id="a7" type="number" step=".01" value="${x.total||0}"></div><div><label>Pago</label><input id="a8" type="number" step=".01" value="${x.paid||0}"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="saveAgendaEdit(${i})">Salvar</button></div>`;modal.classList.add('on')}
+function saveAgendaEdit(i){Object.assign(d.agenda[i],{date:a1.value,client:a2.value,theme:a3.value,service:a4.value,local:a5.value,start:a6.value,total:+a7.value||0,paid:+a8.value||0});closeM();save()}
+
+const brl=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});const M=v=>brl.format(Number(v||0));
+function save(){localStorage.setItem(KEY,JSON.stringify(d));render()}
+function go(id,b){document.querySelectorAll('.section').forEach(x=>x.classList.toggle('on',x.id===id));document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');render()}
+function render(){
+ const edp=d.edna.filter(x=>x.status!=='Pago').reduce((a,x)=>a+x.amount,0), inv=d.cards.reduce((a,x)=>a+x.invoice,0), avail=d.cards.reduce((a,x)=>a+x.available,0), fest=d.events.reduce((a,x)=>a+Math.max(0,x.total-x.paid),0);
+ hEdna.textContent=M(edp);hFat.textContent=M(inv);hLim.textContent=M(avail);hFest.textContent=M(fest);
+ summaryCards.innerHTML=d.summary.map(x=>`<div class="card"><h3>${x.month}</h3><div class="meta">Total comprometido</div><div class="money">${M(x.total)}</div><div class="meta">Cartões ${M(x.cards)} • Reneg. ${M(x.reneg)}</div></div>`).join('');
+ renderEdna();renderEwelin();renderEvents();renderAgenda();renderCash();renderMonthly2();projRows.innerHTML=d.summary.map(x=>`<tr><td>${x.month}</td><td>${M(x.cards)}</td><td>${M(x.reneg)}</td><td>${M(x.monthly)}</td><td><b>${M(x.total)}</b></td></tr>`).join('')
+}
+function renderEdna(){
+ const months=[...new Set(d.edna.map(x=>x.month))];const cur=edMonth.value||months[0];edMonth.innerHTML=months.map(x=>`<option ${x===cur?'selected':''}>${x}</option>`).join('');const arr=d.edna.map((x,i)=>({...x,i})).filter(x=>x.month===edMonth.value);
+ const total=arr.reduce((a,x)=>a+x.amount,0),paid=arr.filter(x=>x.status==='Pago').reduce((a,x)=>a+x.amount,0);edTotal.textContent=M(total);edPend.textContent=M(total-paid);edPaid.textContent=M(paid);edCount.textContent=arr.length;
+ edRows.innerHTML=arr.map(x=>`<tr><td><b>${x.description}</b></td><td>${x.month}</td><td>${M(x.amount)}</td><td>${x.installment||'—'}</td><td><span class="badge">${x.status}</span></td><td><button class="rowbtn ok" onclick="toggleEd(${x.i})">✓</button> <button class="rowbtn del" onclick="delEd(${x.i})">×</button></td></tr>`).join('')
+}
+function toggleEd(i){d.edna[i].status=d.edna[i].status==='Pago'?'A pagar':'Pago';save()}function delEd(i){if(confirm('Excluir?')){d.edna.splice(i,1);save()}}
+function renderEwelin(){
+ const tabs=['Cartões','Parcelamentos','Renegociações','Despesas Mensais','Financiamento','Pagamentos'];ewTabs.innerHTML=tabs.map(t=>`<button class="${t===ewTab?'on':''}" onclick="ewTab='${t}';renderEwelin()">${t}</button>`).join('');
+ if(ewTab==='Cartões'){const lim=d.cards.reduce((a,x)=>a+x.limit,0),used=d.cards.reduce((a,x)=>a+x.used,0),avail=d.cards.reduce((a,x)=>a+x.available,0),inv=d.cards.reduce((a,x)=>a+x.invoice,0);ewContent.innerHTML=`<div class="metrics"><div class="metric"><small>Limite total</small><b>${M(lim)}</b></div><div class="metric"><small>Em uso</small><b class="red">${M(used)}</b></div><div class="metric"><small>Disponível</small><b class="green">${M(avail)}</b></div><div class="metric"><small>Faturas atuais</small><b class="gold">${M(inv)}</b></div></div><div class="grid">${d.cards.map(x=>`<div class="card"><h3>${x.name} ${x.final!=='—'?'• '+x.final:''}</h3><div class="money">${M(x.invoice)}</div><div class="meta">Fatura atual • Venc. ${x.due}</div><div class="meta">Limite ${M(x.limit)} • Disponível ${M(x.available)}</div></div>`).join('')}</div>`}
+ if(ewTab==='Parcelamentos')ewContent.innerHTML=`<div class="panel"><div class="table"><table><thead><tr><th>Cartão</th><th>Compra</th><th>Parcela</th><th>Atual</th><th>Mês inicial</th></tr></thead><tbody>${d.installments.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${M(x[2])}</td><td>${x[3]}</td><td>${x[4]}</td></tr>`).join('')}</tbody></table></div></div>`;
+ if(ewTab==='Renegociações')ewContent.innerHTML=`<div class="grid">${d.reneg.map(x=>`<div class="card"><h3>${x.name}</h3><div class="money">${M(x.amount)}</div><div class="meta">Parcela ${x.installment} • Venc. ${x.due}</div><div class="meta">Saldo nominal: ${M(x.balance)}</div><span class="badge">${x.status}</span></div>`).join('')}</div>`;
+ if(ewTab==='Despesas Mensais')ewContent.innerHTML=`<div class="grid">${d.monthly.map(x=>`<div class="card"><h3>${x.name}</h3><div class="money">${x.amount?M(x.amount):'Valor a informar'}</div><div class="meta">${x.note||'Sem valor cadastrado'}</div>${x.status?`<span class="badge">${x.status}</span>`:''}</div>`).join('')}</div>`;
+ if(ewTab==='Financiamento'){const x=d.mortgage;ewContent.innerHTML=`<div class="panel"><h3>${x.institution}</h3><div class="money">${M(x.contract)}</div><div class="meta">${x.product}</div><p>Proposta: ${x.proposal} • Situação: ${x.status}</p><div class="meta">${x.note}</div></div>`}
+ if(ewTab==='Pagamentos')ewContent.innerHTML=`<div class="panel"><div class="table"><table><thead><tr><th>Data</th><th>Conta</th><th>Tipo</th><th>Valor</th><th>Status</th></tr></thead><tbody>${d.payments.map(x=>`<tr><td>${x.date}</td><td>${x.account}</td><td>${x.type}</td><td>${M(x.amount)}</td><td>${x.status}</td></tr>`).join('')}</tbody></table></div></div>`
+}
+function renderEvents(){const total=d.events.reduce((a,x)=>a+x.total,0),paid=d.events.reduce((a,x)=>a+x.paid,0),exp=d.events.reduce((a,x)=>a+x.expenses,0);fTotal.textContent=M(total);fPaid.textContent=M(paid);fDue.textContent=M(total-paid);fProfit.textContent=M(total-exp);eventGrid.innerHTML=d.events.map((x,i)=>`<div class="card"><h3>${x.client}</h3><div class="meta">${x.date.split('-').reverse().join('/')} • ${x.theme} • ${x.service}</div><div class="money">${M(x.total)}</div><div class="meta">Pago ${M(x.paid)} • Falta ${M(Math.max(0,x.total-x.paid))}</div><span class="badge">${x.status}</span></div>`).join('')}
+function openAdd(type){
+if(type==='cash'){dialog.innerHTML=`<h2>Novo movimento em espécie</h2><div class="form"><div><label>Data</label><input id="a1" type="date" value="${new Date().toISOString().slice(0,10)}"></div><div><label>Descrição</label><input id="a2" placeholder="Ex.: Entrada de cliente"></div><div><label>Tipo</label><select id="a3"><option>Entrada</option><option>Saída</option></select></div><div><label>Valor</label><input id="a4" type="number" step=".01"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="addCash()">Salvar</button></div>`;modal.classList.add('on');return}
+if(type==='monthly'){dialog.innerHTML=`<h2>Nova despesa mensal</h2><div class="form"><div><label>Despesa</label><input id="a1"></div><div><label>Valor</label><input id="a2" type="number" step=".01"></div><div><label>Vencimento</label><input id="a3" placeholder="Ex.: dia 10"></div><div><label>Observação</label><input id="a4"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="addMonthly2()">Salvar</button></div>`;modal.classList.add('on');return}
+if(type==='agenda'){dialog.innerHTML=`<h2>Novo agendamento</h2><div class="form"><div><label>Data</label><input id="a1" type="date"></div><div><label>Cliente</label><input id="a2"></div><div><label>Tema</label><input id="a3"></div><div><label>Serviço</label><select id="a4"><option>Decoração</option><option>Pegue e monte</option><option>Mini decoração</option><option>Outro</option></select></div><div><label>Local</label><input id="a5"></div><div><label>Horário</label><input id="a6" type="time"></div><div><label>Valor total</label><input id="a7" type="number" step=".01"></div><div><label>Entrada/pago</label><input id="a8" type="number" step=".01"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="addAgenda()">Salvar</button></div>`;modal.classList.add('on');return}
+if(type==='edna'){dialog.innerHTML=`<h2>Novo gasto Edna</h2><div class="form"><div><label>Mês</label><input id="a1" value="Setembro 2026"></div><div><label>Descrição</label><input id="a2"></div><div><label>Valor</label><input id="a3" type="number" step=".01"></div><div><label>Parcela</label><input id="a4"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="addEd()">Salvar</button></div>`}else{dialog.innerHTML=`<h2>Novo evento</h2><div class="form"><div><label>Data</label><input id="a1" type="date"></div><div><label>Cliente</label><input id="a2"></div><div><label>Tema</label><input id="a3"></div><div><label>Serviço</label><select id="a4"><option>Decoração</option><option>Pegue e monte</option></select></div><div><label>Valor total</label><input id="a5" type="number" step=".01"></div><div><label>Pago</label><input id="a6" type="number" step=".01"></div><div><label>Gastos</label><input id="a7" type="number" step=".01"></div></div><div class="actions"><button class="btn ghost" onclick="closeM()">Cancelar</button><button class="btn" onclick="addEvent()">Salvar</button></div>`}modal.classList.add('on')}
+function closeM(){modal.classList.remove('on')}
+function addCash(){d.cash.push({date:a1.value,description:a2.value||'Movimento',type:a3.value,amount:+a4.value||0});closeM();save()}
+function addMonthly2(){d.monthly2.push({id:'m'+Date.now(),name:a1.value||'Despesa',amount:+a2.value||0,status:'A pagar',due:a3.value,note:a4.value});closeM();save()}
+function addAgenda(){const item={id:'ag'+Date.now(),date:a1.value,client:a2.value||'Cliente',theme:a3.value,service:a4.value,local:a5.value,start:a6.value,total:+a7.value||0,paid:+a8.value||0,expenses:0,status:(+a8.value||0)>=(+a7.value||0)&&(+a7.value||0)>0?'Pago':((+a8.value||0)>0?'Pago parcial':'Confirmado')};d.agenda.push(item);d.events.push({date:item.date,client:item.client,theme:item.theme,service:item.service,total:item.total,paid:item.paid,expenses:0,status:item.status});closeM();save()}
+function addEd(){d.edna.push({month:a1.value,description:a2.value,amount:+a3.value||0,installment:a4.value,status:'A pagar'});closeM();save()}function addEvent(){d.events.push({date:a1.value,client:a2.value,theme:a3.value,service:a4.value,total:+a5.value||0,paid:+a6.value||0,expenses:+a7.value||0,status:'Confirmado'});closeM();save()}
+function backup(){const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup-nega-festas.json';a.click()}
+
+function toggleChat(){chatbox.classList.toggle('on');if(chatbox.classList.contains('on'))setTimeout(()=>chatcmd.focus(),100)}
+function addMsg(text,who='bot'){const el=document.createElement('div');el.className='msg '+who;el.innerHTML=text;chatmsgs.appendChild(el);chatmsgs.scrollTop=chatmsgs.scrollHeight}
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function numBR(s){if(!s)return 0; s=String(s).replace(/\./g,'').replace(',','.'); const n=parseFloat(s); return isNaN(n)?0:n}
+function monthNameToLabel(t){
+ const m={janeiro:'Janeiro',fevereiro:'Fevereiro',marco:'Março',abril:'Abril',maio:'Maio',junho:'Junho',julho:'Julho',agosto:'Agosto',setembro:'Setembro',outubro:'Outubro',novembro:'Novembro',dezembro:'Dezembro'};
+ const n=norm(t); for(const k in m) if(n.includes(k)){let y=(t.match(/20\d{2}/)||[])[0]||'2026'; if(['janeiro','fevereiro'].includes(k)&&!t.match(/20\d{2}/)) y='2027'; return m[k]+' '+y}
+ return 'Setembro 2026'
+}
+function parseDateBR(t){const m=t.match(/(\d{1,2})[\/\-](\d{1,2})(?:[\/\-](\d{4}))?/);if(!m)return new Date().toISOString().slice(0,10);const y=m[3]||'2026';return `${y}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`}
+function findAmountAfter(text,word){
+ const n=norm(text), i=n.indexOf(word); if(i<0)return 0; const tail=text.slice(i+word.length); const m=tail.match(/(?:r\$\s*)?(\d{1,6}(?:[.,]\d{1,2})?)/i); return m?numBR(m[1]):0
+}
+function runChat(){
+ const raw=chatcmd.value.trim(); if(!raw)return; addMsg(raw,'user'); chatcmd.value=''; const t=norm(raw);
+
+ // Add Edna expense
+ if((t.includes('adicionar')||t.includes('incluir')||t.includes('colocar')) && t.includes('edna')){
+   const month=monthNameToLabel(raw);
+   let amount=0; const nums=[...raw.matchAll(/(?:r\$\s*)?(\d+(?:[.,]\d{1,2})?)/gi)].map(x=>numBR(x[1])).filter(x=>x>0 && x<100000);
+   if(nums.length) amount=nums[nums.length-1];
+   let desc=raw.replace(/adicionar|incluir|colocar/ig,'').replace(/gasto/ig,'').replace(/edna/ig,'').replace(/janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro/ig,'').replace(/20\d{2}/g,'').replace(/r\$\s*\d+(?:[.,]\d{1,2})?/ig,'').replace(/\b\d+(?:[.,]\d{1,2})?\b/g,'').trim();
+   if(!desc) desc='Novo gasto';
+   d.edna.push({month,description:desc,amount,installment:'',status:'A pagar'}); save();
+   addMsg(`✅ Adicionei em <b>Gastos Edna</b>: ${desc} — ${M(amount)} — ${month}.`); return;
+ }
+
+ // Mark Ewelin monthly expense as paid
+ if((t.includes('marcar')||t.includes('dar baixa')||t.includes('pago')) && t.includes('plano de saude')){
+   const x=d.monthly.find(x=>norm(x.name).includes('plano de saude')); if(x){x.status='Pago';save();addMsg('✅ Plano de saúde marcado como <b>Pago</b>.');return}
+ }
+
+ // Add event
+ if((t.includes('adicionar evento')||t.includes('cadastrar evento')||t.includes('novo evento'))){
+   const date=parseDateBR(raw);
+   const total=findAmountAfter(raw,'valor');
+   const paid=findAmountAfter(raw,'pago');
+   const themeM=raw.match(/tema\s+(.+?)(?=\s+valor|\s+pago|$)/i); const theme=themeM?themeM[1].trim():'';
+   let client=raw.replace(/adicionar evento|cadastrar evento|novo evento/ig,'').replace(/\d{1,2}[\/\-]\d{1,2}(?:[\/\-]\d{4})?/g,'').replace(/tema\s+.+?(?=\s+valor|\s+pago|$)/ig,'').replace(/valor\s+(?:r\$\s*)?\d+(?:[.,]\d{1,2})?/ig,'').replace(/pago\s+(?:r\$\s*)?\d+(?:[.,]\d{1,2})?/ig,'').trim();
+   if(!client) client='Cliente';
+   d.events.push({date,client,theme,service:'Decoração',total,paid,expenses:0,status:paid>=total&&total>0?'Pago':(paid>0?'Pago parcial':'Confirmado')}); save();
+   addMsg(`✅ Evento de <b>${client}</b> cadastrado para ${date.split('-').reverse().join('/')} — total ${M(total)}, pago ${M(paid)}.`); return;
+ }
+
+ // Add event expense by client
+ if((t.includes('gasto da festa')||t.includes('despesa da festa')||t.includes('gasto evento'))){
+   const nums=[...raw.matchAll(/(?:r\$\s*)?(\d+(?:[.,]\d{1,2})?)/gi)].map(x=>numBR(x[1])); const amount=nums.length?nums[nums.length-1]:0;
+   const ev=d.events.find(x=>t.includes(norm(x.client)));
+   if(ev){ev.expenses=(ev.expenses||0)+amount;save();addMsg(`✅ Registrei ${M(amount)} de gasto no evento de <b>${ev.client}</b>. Lucro previsto agora: ${M(ev.total-ev.expenses)}.`);return}
+ }
+
+ // Set paid amount for event
+ if((t.includes('recebido')||t.includes('pagou')||t.includes('pagamento')) && d.events.some(x=>t.includes(norm(x.client)))){
+   const ev=d.events.find(x=>t.includes(norm(x.client))); const nums=[...raw.matchAll(/(?:r\$\s*)?(\d+(?:[.,]\d{1,2})?)/gi)].map(x=>numBR(x[1])); const amount=nums.length?nums[nums.length-1]:0;
+   ev.paid=(ev.paid||0)+amount; ev.status=ev.paid>=ev.total&&ev.total>0?'Pago':'Pago parcial'; save();
+   addMsg(`✅ Somei ${M(amount)} ao pagamento de <b>${ev.client}</b>. Total recebido: ${M(ev.paid)}. Falta: ${M(Math.max(0,ev.total-ev.paid))}.`); return;
+ }
+
+ addMsg('Não consegui entender esse comando ainda. Tente algo como: <b>“Adicionar gasto Edna setembro gás 230”</b> ou <b>“Adicionar evento Maria 20/09/2026 tema Minnie valor 300 pago 75”</b>.');
+}
+
+render();
+</script></body></html>
