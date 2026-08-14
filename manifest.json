@@ -1,14 +1,14 @@
 {
-  "name": "Nega Festas Gestão",
+  "name": "Nega Festas",
   "short_name": "Nega Festas",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#fff9fd",
-  "theme_color": "#5b1685",
+  "background_color": "#fbf8fd",
+  "theme_color": "#5c1685",
   "icons": [
     {
-      "src": "logo-nega-festas.png",
-      "sizes": "211x211",
+      "src": "julia-icon.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
